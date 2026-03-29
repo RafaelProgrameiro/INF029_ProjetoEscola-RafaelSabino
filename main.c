@@ -1,35 +1,11 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <locale.h>
-#include <string.h>
+#include "escola.h"
+#include "pessoa.h"
+#include "disciplina.h"
+#include "menu.h"
 
-#define TAM_ALUNO 3
-#define TAM_PROF 3
-
-typedef struct {
-  int dia;
-  int mes;
-  int ano;
-} Data;
-
-typedef struct {
-  int matricula;
-  char nome[50];
-  char sexo;
-  Data dataNascimento;
-  char cpf[11];
-  bool ativo;
-} Pessoa;
-
-//prototipos
-int menuGeral();
-int menuAluno();
-int menuProfessor();
-int menuAtualizar();
-bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula);
-void listarPessoas(Pessoa lista[], int qtd);
-bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool encontrado, int matriculaPessoa);
-bool removerPessoa(Pessoa lista[], int qtd, bool encontrado, int matriculaPessoa);
 
 int main() {
   // configuracao da localizacao para acentuacao das palavras
@@ -38,11 +14,14 @@ int main() {
   //variaveis globais
   Pessoa listaAluno[TAM_ALUNO] = {0};
   Pessoa listaProfessor[TAM_PROF] = {0};
+  Disciplina listaDisciplina[TAM_PROF] = {0};
   int qtdAluno = 0;
   int qtdProf = 0;
+  int qtdDisc = 0;
   int opcao;
   bool sair = false;
   int matricula = 1;
+  int cod = 1;
 
   while(!sair)
   {
@@ -60,7 +39,7 @@ int main() {
 
         while(!sairAluno)
         {
-          opcaoAluno = menuAluno();
+          opcaoAluno = menuPessoa(opcao);
 
           switch(opcaoAluno)
           {
@@ -172,7 +151,7 @@ int main() {
 
         while(!sairProfessor)
         {
-          opcaoProfessor = menuProfessor();
+          opcaoProfessor = menuPessoa(opcao);
 
           switch(opcaoProfessor)
           {
@@ -275,215 +254,152 @@ int main() {
         }
         break;        
       }
-      case 3: printf("Módulo Disciplina\n"); break;
+      case 3:
+      {
+        bool sairDisciplina = false;
+        int opcaoDisciplina;
+
+        printf("Módulo Disciplina\n");
+
+        while(!sairDisciplina)
+        {
+          opcaoDisciplina = menuDisciplina();
+
+          switch(opcaoDisciplina)
+          {
+            case 0: sairDisciplina = true; break;
+            case 1:
+            {
+              printf("\nListar Disciplinas\n");
+
+              if(qtdDisc == 0)
+              {
+                printf("Lista de disciplinas está vazia.\n");
+                break;
+              }
+
+              listarDisciplinas(listaDisciplina, qtdDisc);
+
+              break;
+            }
+            case 2:
+            {
+              printf("\nCadastrar Disciplina\n");
+
+              if(cadastrarDisciplina(listaDisciplina, listaProfessor, qtdProf, qtdDisc, cod))
+              {
+                cod++;
+                qtdDisc++;
+                printf("Disciplina cadastrada com sucesso\n");
+              }
+              else
+                printf("Não foi possível realizar o cadastro\n");
+
+              break;
+            } 
+            case 3:
+            {
+              int codDisciplina;
+              bool encontrado = false;
+
+              printf("\nRemover Disciplina\n");
+              if(qtdDisc == 0)
+              {
+                printf("Lista de disciplinas está vazia.\n");
+                break;
+              }
+
+              printf("Digite o código da disciplina: ");              
+              scanf("%d", &codDisciplina);
+
+              if(codDisciplina < 0)
+              {
+                printf("Código inválido\n");
+                break;
+              }
+
+              encontrado = removerDisciplina(listaDisciplina, qtdDisc, encontrado, codDisciplina);
+
+              if (encontrado)
+              {
+                printf("Disciplina removida com sucesso\n");
+                qtdDisc--;
+              }
+              else
+                printf("Código inexistente.\n");
+
+              break;
+            }
+            case 4:
+            {
+              printf("\nMatricular aluno na disciplina\n");
+              int codDisciplina;
+              bool encontrado = false;
+
+              if(qtdDisc == 0)
+              {
+                printf("Lista de disciplinas está vazia.\n");
+                break;
+              }
+
+              printf("Digite o código da disciplina: ");              
+              scanf("%d", &codDisciplina);
+
+              if(codDisciplina < 0)
+              {
+                printf("Código inválido\n");
+                break;
+              }
+
+              encontrado = inserirAlunoNaDisciplina(listaDisciplina, listaAluno, qtdAluno, qtdDisc, encontrado, codDisciplina);
+
+              if (encontrado)
+                printf("Aluno inserido na disciplina com sucesso\n");
+              else
+                printf("Não foi possivel inserir o aluno da disciplina\n");
+
+              break;
+            }
+            case 5:
+            {
+              int codDisciplina;
+              bool encontrado = false;
+
+              printf("\nRemover aluno da disciplina\n");
+
+              if(qtdDisc == 0)
+              {
+                printf("Lista de disciplinas está vazia.\n");
+                break;
+              }
+
+              printf("Digite o código da disciplina: ");              
+              scanf("%d", &codDisciplina);
+
+              if(codDisciplina < 0)
+              {
+                printf("Código inválido\n");
+                break;
+              }
+
+              encontrado = removerAlunoDaDisciplina(listaDisciplina, qtdDisc, encontrado, codDisciplina);
+              
+              if (encontrado)
+                printf("Aluno removido da disciplina com sucesso\n");
+              else
+                printf("Não foi possivel remover o aluno da disciplina\n");
+
+              break;
+            }
+            default: printf("Opção Inválida\n"); break;
+          }
+        }
+        break;
+      }
       default: printf("Opção Inválida\n"); break;
     }
   }
 
-  //fim do codigo
+  printf("Sistema encerrado.\n");
   return 0;
-}
-
-//funcoes
-int menuGeral()
-{
-  int opcao;
-  printf("\nProjeto Escola\n");
-  printf("1 - Aluno\n");
-  printf("2 - Professor\n");
-  printf("3 - Disciplina\n");
-  printf("0 - Sair\n");
-  
-  scanf("%d", &opcao);
-  getchar();
-
-  return opcao;
-}
-
-int menuAluno()
-{
-  int opcaoAluno;
-  printf("\n1 - Listar Alunos\n");
-  printf("2 - Cadastrar Aluno\n");
-  printf("3 - Atualizar Aluno\n");
-  printf("4 - Remover Aluno\n");
-  printf("0 - Voltar\n");
-
-  scanf("%d", &opcaoAluno);
-  getchar();
-
-  return opcaoAluno;
-}
-
-int menuProfessor()
-{
-  int opcaoProf;
-  printf("\n1 - Listar Professores\n");
-  printf("2 - Cadastrar Professor\n");
-  printf("3 - Atualizar Professor\n");
-  printf("4 - Remover Professor\n");
-  printf("0 - Voltar\n");
-
-  scanf("%d", &opcaoProf);
-  getchar();
-
-  return opcaoProf;
-}
-
-int menuAtualizar()
-{
-  int opcaoAtualizar;
-  printf("\n1 - Atualizar nome\n");
-  printf("2 - Atualizar sexo\n");
-  printf("0 - Cancelar\n");
-
-  scanf("%d", &opcaoAtualizar);
-  getchar();
-
-  return opcaoAtualizar;
-}
-
-bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula)
-{ 
-  char pessoa[10] = {"Pessoa"};
-  switch(opcao)
-  {
-    case 1: strcpy(pessoa, "Aluno"); break;
-    case 2: strcpy(pessoa, "Professor"); break;
-    default: printf("Opção inválida\n"); break;
-  }
-
-  if(qtd == TAM_ALUNO)
-  {
-    printf("Lista de %ss já está cheia.\n", pessoa);
-    return false;
-  }
-
-  char nome[50];
-  bool sexoValido = false;
-  char sexo;
-
-  lista[qtd].matricula = matricula;
-  lista[qtd].ativo = true;
-
-  printf("Digite o nome do %s: ", pessoa);
-  fgets(nome, 50, stdin);
-
-  strcpy(lista[qtd].nome, nome);
-
-  while(!sexoValido)
-  {
-    printf("Digite o caracter para o válido para o sexo (maiúsculo): \n");
-    printf("M - Masculino\n");
-    printf("F - Feminino\n");
-
-    scanf(" %c", &sexo);
-    switch (sexo)    
-    {
-      case 'M': lista[qtd].sexo = sexo; sexoValido = true; break;
-      case 'F': lista[qtd].sexo = sexo; sexoValido = true; break;
-      default: printf("Entrada inválida.\n"); break;
-    }
-  }
-  return true;
-}
-
-void listarPessoas(Pessoa lista[], int qtd)
-{  
-  for(int i = 0; i < qtd; i++)
-  { 
-    if(lista[i].ativo)   
-    {                  
-      printf("\nNome: %s", lista[i].nome);
-      printf("Matrícula: %d\nSexo: %c\n", lista[i].matricula, lista[i].sexo);
-      printf("------------\n");
-    }
-  }
-}
-
-bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool encontrado, int matriculaPessoa)
-{
-  int opcaoAtualizar;
-  bool sairAtualizar = false;
-  char pessoa[10] = {"Pessoa"};
-  switch(opcao)
-  {
-    case 1: strcpy(pessoa, "Aluno"); break;
-    case 2: strcpy(pessoa, "Professor"); break;
-    default: printf("Opção inválida\n"); break;
-  }
-
-  for(int i = 0; i < qtd; i++)
-  {
-    if(matriculaPessoa == lista[i].matricula && lista[i].ativo)
-    {
-      encontrado = true;
-      while(!sairAtualizar)
-      {
-       opcaoAtualizar = menuAtualizar();
-
-       switch(opcaoAtualizar)
-       {
-        case 0: sairAtualizar = true; break;
-        case 1:
-        {
-          char nome[50];
-
-          printf("Digite o nome do aluno: ");
-          getchar();
-          fgets(nome, 50, stdin);
-
-          strcpy(lista[i].nome, nome);
-          sairAtualizar = true;
-          break;
-
-        }
-        case 2: 
-        {
-          char sexo;
-          bool sexoValido = false;
-
-          while(!sexoValido)
-          {
-            printf("Digite o caracter para o sexo do aluno: \n");
-            printf("M - Masculino\n");
-            printf("F - Feminino\n");
-
-            scanf(" %c", &sexo);
-            switch (sexo)    
-            {
-              case 'M': lista[i].sexo = sexo; sexoValido = true; break;
-              case 'F': lista[i].sexo = sexo; sexoValido = true; break;
-              default: printf("Digite o caracter válido para o sexo (maiúsculo)"); break;
-            }
-          }
-          sairAtualizar = true;
-          break;
-        }
-        default: printf("Opção inválida\n"); break;
-       }
-      }   
-    }        
-  }
-  return encontrado ? true : false;
-}
-
-bool removerPessoa(Pessoa lista[], int qtd, bool encontrado, int matriculaPessoa)
-{  
-  for(int i = 0; i < qtd; i++)
-  {
-    if(matriculaPessoa == lista[i].matricula && lista[i].ativo)
-    {
-      encontrado = true;
-      lista[i].ativo = false;
-      for(int j = i; j < qtd - 1; j++)
-      {
-        lista[j].matricula = lista[j + 1].matricula;
-        lista[j].sexo = lista[j + 1].sexo;
-        lista[j].ativo = lista[j + 1].ativo;
-      }      
-      break;
-    }                
-  }
-  return encontrado ? true : false;
 }
