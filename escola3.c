@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <locale.h>
 #include <string.h>
+#include <ctype.h>
 
 #define TAM_ALUNO 3
 #define TAM_PROF 3
@@ -30,6 +31,10 @@ bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula);
 void listarPessoas(Pessoa lista[], int qtdAluno);
 bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool encontrado, int matriculaPessoa);
 bool removerPessoa(Pessoa lista[], int qtd, bool encontrado, int matriculaPessoa);
+bool validaCpf(char cpf[]);
+bool validaData(int dia, int mes, int ano);
+void formataCpf(char cpf[]);
+void formataData(int dia, int mes, int ano);
 
 int main() {
   // configuracao da localizacao para acentuacao das palavras
@@ -353,7 +358,9 @@ bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula)
   bool sexoValido = false;
   char sexo;
   int dia, mes, ano;
+  bool dataValida = false;
   char cpf[12];
+  bool cpfValido = false;
   switch(opcao)
   {
     case 1: strcpy(pessoa, "Alunos"); tam_lista = TAM_ALUNO; break;
@@ -390,17 +397,30 @@ bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula)
     }
   }
 
-  printf("Digite o dia, mês e ano do nascimento: ");
-  scanf("%d %d %d", &dia, &mes, &ano);
+  while(!dataValida)
+  {
+    printf("Digite o dia, mês e ano do nascimento (Ex: 16 10 1990): ");
+    scanf("%d %d %d", &dia, &mes, &ano);
 
+    dataValida = validaData(dia, mes, ano);
+    if(!dataValida)
+      printf("Entrada inválida\n");
+  }
   lista[qtd].dataNascimento.dia = dia;
   lista[qtd].dataNascimento.mes = mes;
   lista[qtd].dataNascimento.ano = ano;
-  
-  getchar();
-  printf("Digite o cpf (somente números): ");
-  fgets(cpf, 12, stdin);
 
+  getchar();
+
+  while(!cpfValido)
+  {
+    printf("Digite o cpf (somente números): ");
+    fgets(cpf, 12, stdin);
+
+    cpfValido = validaCpf(cpf);
+    if(!cpfValido)
+      printf("Entrada inválida\n");      
+  }
   strcpy(lista[qtd].cpf, cpf);
 
   return true;
@@ -415,9 +435,11 @@ void listarPessoas(Pessoa lista[], int qtd)
       printf("\nNome: %s", lista[i].nome);
       printf("Matrícula: %d\n", lista[i].matricula);
       printf("Sexo: %c\n", lista[i].sexo);
-      printf("Data de nascimento: %d/%d/%d\n", lista[i].dataNascimento.dia, lista[i].dataNascimento.mes, lista[i].dataNascimento.ano);
-      printf("Cpf: %s\n", lista[i].cpf);
-      printf("------------\n");
+      printf("Data de nascimento: ");
+      formataData(lista[i].dataNascimento.dia, lista[i].dataNascimento.mes, lista[i].dataNascimento.ano);
+      printf("\nCpf: ");
+      formataCpf(lista[i].cpf);
+      printf("\n------------\n");
     }
   }
 }
@@ -431,7 +453,7 @@ bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool encontrado, int ma
   {
     case 1: strcpy(pessoa, "Alunos"); break;
     case 2: strcpy(pessoa, "Professores"); break;
-    default: printf("Opção inválida\n"); break;
+    default: printf("Entrada inválida.\n"); break;
   }
 
   for(int i = 0; i < qtd; i++)
@@ -473,7 +495,7 @@ bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool encontrado, int ma
             {
               case 'M': lista[i].sexo = sexo; sexoValido = true; break;
               case 'F': lista[i].sexo = sexo; sexoValido = true; break;
-              default: printf("Opção inválida"); break;
+              default: printf("Entrada inválida.\n"); break;
             }
           }
           sairAtualizar = true;
@@ -482,10 +504,17 @@ bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool encontrado, int ma
         case 3:
         {
           int dia, mes, ano;
+          bool dataValida = false;
 
-          printf("Digite o dia, mês e ano do nascimento: ");
-          scanf("%d %d %d", &dia, &mes, &ano);
+          while(!dataValida)
+          {
+            printf("Digite o dia, mês e ano do nascimento (Ex: 16 10 1990): ");
+            scanf("%d %d %d", &dia, &mes, &ano);
 
+            dataValida = validaData(dia, mes, ano);
+            if(!dataValida)
+              printf("Entrada inválida\n");
+          }
           lista[i].dataNascimento.dia = dia;
           lista[i].dataNascimento.mes = mes;
           lista[i].dataNascimento.ano = ano;
@@ -496,10 +525,17 @@ bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool encontrado, int ma
         case 4:
         {
           char cpf[12];
+          bool cpfValido = false;
 
-          printf("Digite o cpf (somente números): ");
-          fgets(cpf, 12, stdin);
+          while(!cpfValido)
+          {
+            printf("Digite o cpf (somente números): ");
+            fgets(cpf, 12, stdin);
 
+            cpfValido = validaCpf(cpf);
+            if(!cpfValido)
+              printf("O cpf digitado não tem 11 digitos.\n");
+          }
           strcpy(lista[i].cpf, cpf);
 
           sairAtualizar = true;
@@ -534,4 +570,132 @@ bool removerPessoa(Pessoa lista[], int qtd, bool encontrado, int matriculaPessoa
     }                
   }
   return encontrado ? true : false;
+}
+
+bool validaCpf(char cpf[])
+{
+  int cpfNumerico[11];
+  int soma, resto, div1, div2;
+  
+  if(strlen(cpf) != 11)
+  {
+    printf("O cpf digitado não tem 11 digitos\n");
+    return false;
+  }
+
+  for(int i = 0; i < 11; i++)
+  {
+    if (!isdigit(cpf[i]))
+    {
+      printf("Usar apenas digitos para preencher o cpf\n");
+      return false; 
+    }
+    cpfNumerico[i] = cpf[i] - '0';
+  }
+
+  soma = 0;
+  for(int i = 0, j = 10; i < 9; i++, j--)
+    soma += cpfNumerico[i] * j;
+
+  resto = soma % 11;
+  div1 = (resto < 2) ? 0 : (11 - resto);
+
+  soma = 0;
+  for(int i = 0, j = 11; i < 10; i++, j--)
+    soma += cpfNumerico[i] * j;
+
+  resto = soma % 11;
+  div2 = (resto < 2) ? 0 : (11 - resto);
+
+  if(!(div1 == cpfNumerico[9] && div2 == cpfNumerico[10]))
+    return false;
+
+  return true;
+}
+
+bool validaData(int dia, int mes, int ano)
+{ 
+  bool bissexto;
+
+  if(ano % 4 == 0)
+  {
+    if(ano % 100 == 0)
+    {
+      if(ano % 400 == 0)
+        bissexto = true;
+      else
+        bissexto = false;
+    }else
+      bissexto = true;      
+  } else
+      bissexto = false;
+
+  if(dia <= 0 || dia > 31)
+  {
+    printf("O dia precisa ser entre 1 e 31\n");
+    return false;
+  }
+
+  if(mes <= 0 || mes > 12)
+  {
+    printf("O mês precisa ser entre 1 e 12\n");
+    return false;
+  }
+
+  if(mes == 2 && !bissexto && dia > 28)
+  {
+    printf("Dia inválido para o mês e ano informado\n");
+    return false;
+  }
+
+  if(mes == 2 && bissexto && dia > 29)
+  {
+    printf("Dia inválido para o mês e ano informado\n");
+    return false;
+  }
+
+  if((mes == 4 || mes == 6 || mes == 9 || mes == 11 ) && dia > 30)
+  {
+    printf("Dia inválido para o mês informado\n");
+    return false;
+  }  
+
+  if(ano < 1900 && ano > 2026)
+  {
+    printf("O ano precisa ser maior que 1900 e/ou menor que 2026\n");
+    return false;
+  }
+
+  return true;
+}
+
+void formataCpf(char cpf[])
+{
+  for(int i = 0; i < 3; i++)
+    printf("%c", cpf[i]);
+  printf(".");
+
+  for(int i = 3; i < 6; i++)
+    printf("%c", cpf[i]);
+  printf(".");
+
+  for(int i = 6; i < 9; i++)
+    printf("%c", cpf[i]);
+  printf("-");
+
+  for(int i = 9; i < 11; i++)
+    printf("%c", cpf[i]);  
+}
+
+void formataData(int dia, int mes, int ano)
+{
+  if(dia < 10)
+    printf("0");
+  printf("%d/", dia);
+
+  if(mes < 10)
+    printf("0");
+  printf("%d/", mes);
+
+  printf("%d", ano);
 }
