@@ -10,6 +10,7 @@ int menuGeral()
   printf("1 - Aluno\n");
   printf("2 - Professor\n");
   printf("3 - Disciplina\n");
+  printf("4 - Relatórios\n");
   printf("0 - Sair\n");
   
   scanf("%d", &opcao);
@@ -71,4 +72,28 @@ int menuAtualizarPessoa()
   getchar();
 
   return opcaoAtualizar;
+}
+
+int menuRelatorios()
+{
+  int opcaoRelatorio;
+  printf("\n1 - Listar Alunos/Professores\n");
+  printf("2 - Listar Disciplinas\n");
+  printf("3 - Detalhar Disciplina\n");
+  printf("5 - Listar Alunos por sexo\n");
+  printf("6 - Listar Alunos por ordem alfabética\n");
+  printf("7 - Listar Alunos por data de nascimento\n");
+  printf("8 - Listar Professores por sexo\n");
+  printf("9 - Listar Professores por ordem alfabética\n");
+  printf("10 - Listar Professores por data de nascimento\n");
+  printf("11 - Aniversariantes do mês\n");
+  printf("12 - Listar pessoas por busca do nome\n");
+  printf("13 - Listar Alunos matriculados em menos de 3 disciplinas\n");
+  printf("14 - Listar Disciplinas com mais de 40 vagas\n");
+  printf("0 - Voltar\n");
+
+  scanf("%d", &opcaoRelatorio);
+  getchar();
+
+  return opcaoRelatorio;
 }

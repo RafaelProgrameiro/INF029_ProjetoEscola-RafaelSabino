@@ -5,5 +5,6 @@ int menuGeral();
 int menuPessoa(int opcao);
 int menuDisciplina();
 int menuAtualizarPessoa();
+int menuRelatorios();
 
 #endif

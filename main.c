@@ -5,7 +5,7 @@
 #include "pessoa.h"
 #include "disciplina.h"
 #include "menu.h"
-
+#include "relatorio.h"
 
 int main() {
   // configuracao da localizacao para acentuacao das palavras
@@ -388,6 +388,116 @@ int main() {
                 printf("Aluno removido da disciplina com sucesso\n");
               else
                 printf("Não foi possivel remover o aluno da disciplina\n");
+
+              break;
+            }
+            default: printf("Opção Inválida\n"); break;
+          }
+        }
+        break;
+      }
+      case 4:
+      {
+        bool sairRelatorio = false;
+        int opcaoRelatorio;
+
+        printf("Módulo Relatórios\n");
+
+        while(!sairRelatorio)
+        {
+          opcaoRelatorio = menuRelatorios();
+          switch(opcaoRelatorio)
+          {
+            case 0: sairRelatorio = true; break;
+            case 1: 
+            {
+              int opcaoPessoa;
+              bool opcaoValida = false;
+
+              while(!opcaoValida)
+              {
+                printf("\nListar Alunos/Professores\n");
+                printf("1 - Listar Alunos\n");
+                printf("2 - Listar Professores\n");
+                printf("0 - Voltar\n");
+                scanf("%d", &opcaoPessoa);
+
+                switch(opcaoPessoa)
+                {
+                  case 0: opcaoValida = true; break;
+                  case 1:
+                  {                           
+                    printf("\nListar Alunos\n");
+
+                    if(qtdAluno == 0)
+                    {
+                      printf("Lista de alunos está vazia.\n");
+                      break;
+                    }
+                    
+                    listarPessoas(listaAluno, qtdAluno);
+                    
+                    break;
+                  }
+                  case 2: 
+                  {                           
+                    printf("\nListar Professores\n");
+
+                    if(qtdAluno == 0)
+                    {
+                      printf("Lista de professores está vazia.\n");
+                      break;
+                    }
+                    
+                    listarPessoas(listaProfessor, qtdProf);
+                    
+                    break;
+                  }
+                  default: printf("Opção inválida\n"); break;
+                }
+              }
+              break;
+            }
+            case 2:
+            {              
+              printf("\nListar Disciplinas\n");
+
+              if(qtdDisc == 0)
+              {
+                printf("Lista de disciplinas está vazia.\n");
+                break;
+              }
+
+              listarDisciplinas(listaDisciplina, qtdDisc);
+
+              break;
+            }
+            case 3:
+            {
+              int codDisciplina;
+              bool encontrado = false;
+              
+              printf("\nDetalhar Disciplina\n");
+
+              if(qtdDisc == 0)
+              {
+                printf("Lista de disciplinas está vazia.\n");
+                break;
+              }
+
+              printf("Digite o código da disciplina: ");              
+              scanf("%d", &codDisciplina);
+
+              if(codDisciplina < 0)
+              {
+                printf("Código inválido\n");
+                break;
+              }
+
+              encontrado = detalharDisciplina(listaDisciplina, listaAluno, qtdAluno, qtdDisc, encontrado, codDisciplina);
+              
+              if (!encontrado)
+                printf("Não foi encontrar a disciplina informada\n");
 
               break;
             }
