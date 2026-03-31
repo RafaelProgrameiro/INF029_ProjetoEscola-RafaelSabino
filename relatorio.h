@@ -5,5 +5,7 @@
 #include <stdbool.h>
 
 bool detalharDisciplina(Disciplina lista[], Pessoa listaAluno[], int qtdAluno, int qtdDisc, bool encontrado, int codDisciplina);
+void listarPessoasPorSexo(Pessoa lista[], int qtd, char sexo);
+void listarPessoasPorOrdemAlfabetica(Pessoa lista[], int qtd);
 
 #endif

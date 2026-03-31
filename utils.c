@@ -130,3 +130,17 @@ void formataData(int dia, int mes, int ano)
 
   printf("%d", ano);
 }
+
+void ordenarPessoasPorNome(Pessoa lista[], int qtd)
+{
+  Pessoa aux;
+  
+  for(int i = 0; i < qtd - 1; i++)
+    for(int j = 0; j < qtd - i - 1; j++)
+      if(strcmp(lista[j].nome, lista[j + 1].nome) > 0)
+      {
+        aux = lista[j];
+        lista[j] = lista[j + 1];
+        lista[j + 1] = aux;
+      }
+}

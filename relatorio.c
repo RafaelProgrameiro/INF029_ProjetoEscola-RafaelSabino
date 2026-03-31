@@ -1,7 +1,8 @@
 #include "relatorio.h"
+#include "utils.h"
 #include <stdio.h>
+#include <string.h>
 
-// DETALHAR UMA DISCIPLINA
 // LISTAR ALUNOS POR SEXO
 // LISTAR ALUNOS ORDENADOS POR NOME
 // LISTAR PROFESSORES ORDENADOS POR DATA DE NASCIMENTO
@@ -50,4 +51,33 @@ bool detalharDisciplina(Disciplina lista[], Pessoa listaAluno[], int qtdAluno, i
   }
 
   return encontrado ? true : false;
+}
+
+void listarPessoasPorSexo(Pessoa lista[], int qtd, char sexo)
+{
+  for(int i = 0; i < qtd; i++)
+  {
+    if(lista[i].ativo && lista[i].sexo == sexo)
+    {
+      printf("\nNome: %s", lista[i].nome);
+      printf("Matrícula: %d\n", lista[i].matricula);
+      printf("Sexo: %c\n", lista[i].sexo);
+      printf("Data de nascimento: ");
+      formataData(lista[i].dataNascimento.dia, lista[i].dataNascimento.mes, lista[i].dataNascimento.ano);
+      printf("\nCpf: ");
+      formataCpf(lista[i].cpf);
+      printf("\n------------\n");
+    }
+  }
+}
+
+void listarPessoasPorOrdemAlfabetica(Pessoa lista[], int qtd)
+{
+  Pessoa pessoasOrdenada[TAM_ALUNO];
+
+  for(int i = 0; i < qtd; i++)
+    pessoasOrdenada[i]= lista[i];
+
+  ordenarPessoasPorNome(pessoasOrdenada, qtd);
+  listarPessoas(pessoasOrdenada, qtd);
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include <locale.h>
 #include "escola.h"
 #include "pessoa.h"
@@ -498,6 +499,154 @@ int main() {
               
               if (!encontrado)
                 printf("Não foi encontrar a disciplina informada\n");
+
+              break;
+            }
+            case 4:
+            {
+              int opcaoPessoa;
+              bool opcaoValida = false;
+
+              printf("\nListar Alunos/Professores por sexo\n");
+
+              while(!opcaoValida)
+              {                
+                printf("1 - Listar Alunos\n");
+                printf("2 - Listar Professores\n");
+                printf("0 - Voltar\n");
+                scanf("%d", &opcaoPessoa);
+
+                switch(opcaoPessoa)
+                {
+                  case 0: opcaoValida = true; break;
+                  case 1:
+                  {                           
+                    int opcaoSexo;
+                    bool opcaoSexoValida = false;
+                    char sexo;
+                    char sexoTexto[10] = "Masculino";
+
+                    printf("\nListar Alunos por sexo\n");
+
+                    if(qtdProf == 0)
+                    {
+                      printf("Lista de alunos está vazia.\n");
+                      break;
+                    }
+
+                    while(!opcaoSexoValida)
+                    {
+                      printf("\nSexo\n");
+                      printf("1 - Masculino\n");
+                      printf("2 - Feminino\n");
+                      printf("0 - Voltar\n");
+                      scanf("%d", &opcaoSexo);
+
+                      switch(opcaoSexo)
+                      {
+                        case 0: opcaoSexoValida = true; break;
+                        case 1: sexo = 'M'; opcaoSexoValida = true; break;
+                        case 2: sexo = 'F'; opcaoSexoValida = true; strcpy(sexoTexto, "Feminino"); break;
+                        default: printf("Opção inválida\n"); break;                        
+                      }                      
+                    }                   
+                    printf("Alunos do sexo: '%s'\n", sexoTexto);
+                    listarPessoasPorSexo(listaAluno, qtdAluno, sexo);
+                    
+                    break;
+                  }
+                  case 2: 
+                  {
+                    int opcaoSexo;
+                    bool opcaoSexoValida = false;
+                    char sexo;
+                    char sexoTexto[10] = "Masculino";
+
+                    printf("\nListar Professores por sexo\n");
+
+                    if(qtdProf == 0)
+                    {
+                      printf("Lista de professores está vazia.\n");
+                      break;
+                    }
+
+                    while(!opcaoSexoValida)
+                    {
+                      printf("\nSexo\n");
+                      printf("1 - Masculino\n");
+                      printf("2 - Feminino\n");
+                      printf("0 - Voltar\n");
+                      scanf("%d", &opcaoSexo);
+
+                      switch(opcaoSexo)
+                      {
+                        case 0: opcaoSexoValida = true; break;
+                        case 1: sexo = 'M'; opcaoSexoValida = true; break;
+                        case 2: sexo = 'F'; opcaoSexoValida = true; strcpy(sexoTexto, "Feminino"); break;
+                        default: printf("Opção inválida\n"); break;                        
+                      }                      
+                    }                   
+                    
+                    printf("Professores do sexo: '%s'\n", sexoTexto);
+                    listarPessoasPorSexo(listaProfessor, qtdProf, sexo);
+                    
+                    break;
+                  }
+                  default: printf("Opção inválida\n"); break;
+                }
+              }
+              break;
+            }
+            case 5:
+            {
+              printf("\nListar Alunos/Professores em Ordem Alfabética\n");
+
+              int opcaoPessoa;
+              bool opcaoValida = false;
+
+              while(!opcaoValida)
+              {
+                printf("\nListar Alunos/Professores\n");
+                printf("1 - Listar Alunos\n");
+                printf("2 - Listar Professores\n");
+                printf("0 - Voltar\n");
+                scanf("%d", &opcaoPessoa);
+
+                switch(opcaoPessoa)
+                {
+                  case 0: opcaoValida = true; break;
+                  case 1:
+                  {                           
+                    printf("\nListar Alunos\n");                    
+
+                    if(qtdAluno == 0)
+                    {
+                      printf("Lista de alunos está vazia.\n");
+                      break;
+                    }                    
+                    
+                    listarPessoasPorOrdemAlfabetica(listaAluno, qtdAluno);
+                    
+                    break;
+                  }
+                  case 2:
+                  {                           
+                    printf("\nListar Professores\n");                    
+
+                    if(qtdProf == 0)
+                    {
+                      printf("Lista de professores está vazia.\n");
+                      break;
+                    }                    
+                    
+                    listarPessoasPorOrdemAlfabetica(listaProfessor, qtdProf);
+                    
+                    break;
+                  }
+                  default: printf("Opção inválida\n"); break;
+                }
+
+              }
 
               break;
             }
