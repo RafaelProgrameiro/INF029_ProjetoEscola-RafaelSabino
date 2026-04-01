@@ -3,15 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// LISTAR ALUNOS POR SEXO
-// LISTAR ALUNOS ORDENADOS POR NOME
-// LISTAR PROFESSORES ORDENADOS POR DATA DE NASCIMENTO
-// LISTAR PROFESSORES POR SEXO
-// LISTAR PROFESSORES ORDENADOS POR NOME
-// LISTAR PROFESSORES ORDENADOS POR DATA DE NASCIMENTO
-// ANIVERSARIANTES DO MES
-// LISTA DE PESSOAS A PARTIR DE UMA STRING DE BUSCA.O USUARIO INFORMA NO MINIMO TRES LETRAS
-// E DEVE SER LISTADO TODAS AS PESSOAS QUE CONTEM ESSAS TRES LETRAS NO NOME
+// LISTA DE PESSOAS A PARTIR DE UMA STRING DE BUSCA.O USUARIO INFORMA NO MINIMO TRES LETRAS E DEVE SER LISTADO TODAS AS PESSOAS QUE CONTEM ESSAS TRES LETRAS NO NOME
 // LISTA DE ALUNOS MATRICULADOS EM MENOS DE 3 DISCIPLINAS
 // LISTA DE DISCIPLINAS, COM NOME DO PROFESSOR, QUE EXTRAPOLAM 40 VAGAS
 
@@ -80,4 +72,70 @@ void listarPessoasPorOrdemAlfabetica(Pessoa lista[], int qtd)
 
   ordenarPessoasPorNome(pessoasOrdenada, qtd);
   listarPessoas(pessoasOrdenada, qtd);
+}
+
+void listarPessoasPorDataNascimento(Pessoa lista[], int qtd)
+{
+  Pessoa pessoasOrdenada[TAM_ALUNO];
+
+  for(int i = 0; i < qtd; i++)
+    pessoasOrdenada[i]= lista[i];
+
+  ordenarPessoasPorDataNacimento(pessoasOrdenada, qtd);
+  listarPessoas(pessoasOrdenada, qtd);
+}
+
+void listarAniversariantesDoMes(Pessoa listaAluno[], Pessoa listaProfessor[], int qtdAluno, int qtdProf, int mes)
+{
+  int contador = 0;
+
+  printf("Alunos: \n");
+  if(qtdAluno == 0)              
+    printf("Lista de alunos está vazia.\n");
+  else
+  {
+    for(int i = 0; i < qtdAluno; i++)
+    {
+      if(listaAluno[i].ativo && listaAluno[i].dataNascimento.mes == mes)
+      {
+        contador++;
+        printf("\nNome: %s", listaAluno[i].nome);
+        printf("Matrícula: %d\n", listaAluno[i].matricula);
+        printf("Sexo: %c\n", listaAluno[i].sexo);
+        printf("Data de nascimento: ");
+        formataData(listaAluno[i].dataNascimento.dia, listaAluno[i].dataNascimento.mes, listaAluno[i].dataNascimento.ano);
+        printf("\nCpf: ");
+        formataCpf(listaAluno[i].cpf);
+        printf("\n------------\n");
+      }
+    }
+  }
+  if (contador == 0)
+    printf("Nenhum aluno faz aniversário neste mês\n");
+
+  contador = 0;
+
+  printf("Professores: \n");    
+  if(qtdProf == 0)  
+    printf("Lista de professores está vazia.\n");
+  else
+  {
+    for(int i = 0; i < qtdProf; i++)
+    {
+      if(listaProfessor[i].ativo && listaProfessor[i].dataNascimento.mes == mes)
+      {
+        contador++;
+        printf("\nNome: %s", listaProfessor[i].nome);
+        printf("Matrícula: %d\n", listaProfessor[i].matricula);
+        printf("Sexo: %c\n", listaProfessor[i].sexo);
+        printf("Data de nascimento: ");
+        formataData(listaProfessor[i].dataNascimento.dia, listaProfessor[i].dataNascimento.mes, listaProfessor[i].dataNascimento.ano);
+        printf("\nCpf: ");
+        formataCpf(listaProfessor[i].cpf);
+        printf("\n------------\n");
+      }
+    }
+  }
+  if (contador == 0)
+    printf("Nenhum professor faz aniversário neste mês\n");
 }

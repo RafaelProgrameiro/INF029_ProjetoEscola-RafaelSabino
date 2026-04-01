@@ -144,3 +144,22 @@ void ordenarPessoasPorNome(Pessoa lista[], int qtd)
         lista[j + 1] = aux;
       }
 }
+
+void ordenarPessoasPorDataNacimento(Pessoa lista[], int qtd)
+{
+  Pessoa aux;
+  long dataJ, dataJ1; 
+
+  for(int i = 0; i < qtd - 1; i++)
+    for(int j = 0; j < qtd - i - 1; j++)
+    {
+      dataJ = (lista[j].dataNascimento.ano * 10000L) + (lista[j].dataNascimento.ano * 100L) + (lista[j].dataNascimento.ano); 
+      dataJ1 = (lista[j + 1].dataNascimento.ano * 10000L) + (lista[j + 1].dataNascimento.ano * 100L) + (lista[j + 1].dataNascimento.ano); 
+      if(dataJ < dataJ1)
+        {
+          aux = lista[j];
+          lista[j] = lista[j + 1];
+          lista[j + 1] = aux;
+        }
+    }
+}

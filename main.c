@@ -528,7 +528,7 @@ int main() {
 
                     printf("\nListar Alunos por sexo\n");
 
-                    if(qtdProf == 0)
+                    if(qtdAluno == 0)
                     {
                       printf("Lista de alunos está vazia.\n");
                       break;
@@ -645,8 +645,75 @@ int main() {
                   }
                   default: printf("Opção inválida\n"); break;
                 }
-
               }
+              break;
+            }
+            case 6: 
+            {
+              printf("\nListar Alunos/Professores em Ordem Alfabética\n");
+
+              int opcaoPessoa;
+              bool opcaoValida = false;
+
+              while(!opcaoValida)
+              {
+                printf("\nListar Alunos/Professores\n");
+                printf("1 - Listar Alunos\n");
+                printf("2 - Listar Professores\n");
+                printf("0 - Voltar\n");
+                scanf("%d", &opcaoPessoa);
+
+                switch(opcaoPessoa)
+                {
+                  case 0: opcaoValida = true; break;
+                  case 1:
+                  {                           
+                    printf("\nListar Alunos\n");
+
+                    if(qtdAluno == 0)
+                    {
+                      printf("Lista de alunos está vazia.\n");
+                      break;
+                    }                    
+                    
+                    listarPessoasPorDataNascimento(listaAluno, qtdAluno);
+                    
+                    break;
+                  }
+                  case 2:
+                  {                           
+                    printf("\nListar Professores\n");                    
+
+                    if(qtdProf == 0)
+                    {
+                      printf("Lista de professores está vazia.\n");
+                      break;
+                    }                    
+                    
+                    listarPessoasPorDataNascimento(listaProfessor, qtdProf);
+                    
+                    break;
+                  }
+                  default: printf("Opção inválida\n"); break;
+                }
+              }
+              break;
+            }
+            case 7:
+            {
+              int mes;
+              printf("\nListar aniversariantes do mês\n");
+
+              printf("Digite o mês (1 a 12): ");
+              scanf("%d", &mes);
+
+              if(mes < 0 || mes > 12)
+              {
+                printf("Mês inválido\n");
+                break;
+              }
+
+              listarAniversariantesDoMes(listaAluno, listaProfessor, qtdAluno, qtdProf, mes);
 
               break;
             }
