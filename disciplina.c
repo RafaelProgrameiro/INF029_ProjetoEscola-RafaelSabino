@@ -78,6 +78,12 @@ bool cadastrarDisciplina(Disciplina lista[], Pessoa listaProfessor[], int qtdPro
   lista[qtd].semestre = semestre;
   lista[qtd].totalVagas = totalVagas;
   lista[qtd].professor = professor;
+  for(int i = 0; i < qtdProf; i++)
+    if(listaProfessor[i].matricula == matriculaProf)
+    {
+      listaProfessor[i].qtdDisciplinas++;
+      break;
+    }
   lista[qtd].qtdAlunosMatriculados = 0;
   for(int i = 0; i < MAX_ALUNOS; i++)
     lista[qtd].matriculaAlunos[i] = 0;
@@ -103,7 +109,7 @@ void listarDisciplinas(Disciplina lista[], int qtd)
   }
 }
 
-bool removerDisciplina(Disciplina lista[], int qtd, bool encontrado, int codDisciplina)
+bool removerDisciplina(Disciplina lista[], Pessoa listaProfessor[], int qtd, int qtdProf, bool encontrado, int codDisciplina)
 {  
   for(int i = 0; i < qtd; i++)
   {
@@ -114,6 +120,13 @@ bool removerDisciplina(Disciplina lista[], int qtd, bool encontrado, int codDisc
         
       for(int j = i; j < qtd - 1; j++)
         lista[j] = lista[j + 1];
+
+      for(int j = 0; j < qtdProf; j++)
+        if(listaProfessor[j].matricula == lista[i].professor.matricula)
+        {
+          listaProfessor[j].qtdDisciplinas--;
+          break;
+        }
 
       break;
     }                
@@ -169,8 +182,13 @@ bool inserirAlunoNaDisciplina(Disciplina lista[], Pessoa listaAluno[], int qtdAl
       
       posicao = lista[i].qtdAlunosMatriculados;
       lista[i].matriculaAlunos[posicao] = matriculaAluno;
-      lista[i].qtdAlunosMatriculados++; 
-      
+      lista[i].qtdAlunosMatriculados++;
+      for(int i = 0; i < qtdAluno; i++)
+        if(listaAluno[i].matricula == matriculaAluno)
+        {
+          listaAluno[i].qtdDisciplinas++;
+          break;
+        }
       break;
     }
   }
@@ -181,7 +199,8 @@ bool inserirAlunoNaDisciplina(Disciplina lista[], Pessoa listaAluno[], int qtdAl
   return encontrado ? true : false;
 }
 
-bool removerAlunoDaDisciplina(Disciplina lista[], int qtd, bool encontrado, int codDisciplina)
+
+bool removerAlunoDaDisciplina(Disciplina lista[], Pessoa listaAluno[], int qtd, int qtdAluno, bool encontrado, int codDisciplina)
 {
   int matriculaAluno;
   int posicao;
@@ -219,6 +238,13 @@ bool removerAlunoDaDisciplina(Disciplina lista[], int qtd, bool encontrado, int 
         lista[j] = lista[j + 1];
 
       lista[i].qtdAlunosMatriculados--;
+      
+      for(int j = 0; j < qtdAluno; j++)
+        if(listaAluno[j].matricula == matriculaAluno)
+        {
+          listaAluno[j].qtdDisciplinas--;
+          break;
+        }
 
       break;
     }

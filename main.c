@@ -319,7 +319,7 @@ int main() {
                 break;
               }
 
-              encontrado = removerDisciplina(listaDisciplina, qtdDisc, encontrado, codDisciplina);
+              encontrado = removerDisciplina(listaDisciplina, listaProfessor, qtdDisc, qtdProf, encontrado, codDisciplina);
 
               if (encontrado)
               {
@@ -383,7 +383,7 @@ int main() {
                 break;
               }
 
-              encontrado = removerAlunoDaDisciplina(listaDisciplina, qtdDisc, encontrado, codDisciplina);
+              encontrado = removerAlunoDaDisciplina(listaDisciplina, listaAluno, qtdDisc, qtdAluno, encontrado, codDisciplina);
               
               if (encontrado)
                 printf("Aluno removido da disciplina com sucesso\n");

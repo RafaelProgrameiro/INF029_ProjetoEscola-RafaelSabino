@@ -58,6 +58,7 @@ void listarPessoasPorSexo(Pessoa lista[], int qtd, char sexo)
       formataData(lista[i].dataNascimento.dia, lista[i].dataNascimento.mes, lista[i].dataNascimento.ano);
       printf("\nCpf: ");
       formataCpf(lista[i].cpf);
+      printf("Quantidade de disciplinas: %d", lista[i].qtdDisciplinas);
       printf("\n------------\n");
     }
   }
@@ -106,6 +107,7 @@ void listarAniversariantesDoMes(Pessoa listaAluno[], Pessoa listaProfessor[], in
         formataData(listaAluno[i].dataNascimento.dia, listaAluno[i].dataNascimento.mes, listaAluno[i].dataNascimento.ano);
         printf("\nCpf: ");
         formataCpf(listaAluno[i].cpf);
+        printf("Quantidade de disciplinas: %d", listaAluno[i].qtdDisciplinas);
         printf("\n------------\n");
       }
     }
@@ -132,6 +134,7 @@ void listarAniversariantesDoMes(Pessoa listaAluno[], Pessoa listaProfessor[], in
         formataData(listaProfessor[i].dataNascimento.dia, listaProfessor[i].dataNascimento.mes, listaProfessor[i].dataNascimento.ano);
         printf("\nCpf: ");
         formataCpf(listaProfessor[i].cpf);
+        printf("Quantidade de disciplinas: %d", listaProfessor[i].qtdDisciplinas);
         printf("\n------------\n");
       }
     }

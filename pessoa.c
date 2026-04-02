@@ -77,6 +77,7 @@ bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula)
   lista[qtd].dataNascimento.mes = mes;
   lista[qtd].dataNascimento.ano = ano;
   strcpy(lista[qtd].cpf, cpf);
+  lista[qtd].qtdDisciplinas = 0;
 
   return true;
 }
@@ -94,6 +95,7 @@ void listarPessoas(Pessoa lista[], int qtd)
       formataData(lista[i].dataNascimento.dia, lista[i].dataNascimento.mes, lista[i].dataNascimento.ano);
       printf("\nCpf: ");
       formataCpf(lista[i].cpf);
+      printf("Quantidade de disciplinas: %d", lista[i].qtdDisciplinas);      
       printf("\n------------\n");
     }
   }

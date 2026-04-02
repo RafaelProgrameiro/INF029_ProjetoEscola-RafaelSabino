@@ -18,6 +18,7 @@ typedef struct {
     char sexo;
     Data dataNascimento;
     char cpf[12];
+    int qtdDisciplinas;
     bool ativo;
 } Pessoa;
 
