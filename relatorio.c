@@ -3,10 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// LISTA DE PESSOAS A PARTIR DE UMA STRING DE BUSCA.O USUARIO INFORMA NO MINIMO TRES LETRAS E DEVE SER LISTADO TODAS AS PESSOAS QUE CONTEM ESSAS TRES LETRAS NO NOME
-// LISTA DE ALUNOS MATRICULADOS EM MENOS DE 3 DISCIPLINAS
-// LISTA DE DISCIPLINAS, COM NOME DO PROFESSOR, QUE EXTRAPOLAM 40 VAGAS
-
 bool detalharDisciplina(Disciplina lista[], Pessoa listaAluno[], int qtdAluno, int qtdDisc, bool encontrado, int codDisciplina)
 {
   for(int i = 0; i < qtdDisc; i++)
@@ -58,7 +54,7 @@ void listarPessoasPorSexo(Pessoa lista[], int qtd, char sexo)
       formataData(lista[i].dataNascimento.dia, lista[i].dataNascimento.mes, lista[i].dataNascimento.ano);
       printf("\nCpf: ");
       formataCpf(lista[i].cpf);
-      printf("Quantidade de disciplinas: %d", lista[i].qtdDisciplinas);
+      printf("\nQuantidade de disciplinas: %d", lista[i].qtdDisciplinas);
       printf("\n------------\n");
     }
   }
@@ -88,7 +84,7 @@ void listarPessoasPorDataNascimento(Pessoa lista[], int qtd)
 
 void listarAniversariantesDoMes(Pessoa listaAluno[], Pessoa listaProfessor[], int qtdAluno, int qtdProf, int mes)
 {
-  int contador = 0;
+  bool encontrou = false;
 
   printf("Alunos: \n");
   if(qtdAluno == 0)              
@@ -99,7 +95,7 @@ void listarAniversariantesDoMes(Pessoa listaAluno[], Pessoa listaProfessor[], in
     {
       if(listaAluno[i].ativo && listaAluno[i].dataNascimento.mes == mes)
       {
-        contador++;
+        encontrou = true;
         printf("\nNome: %s", listaAluno[i].nome);
         printf("Matrícula: %d\n", listaAluno[i].matricula);
         printf("Sexo: %c\n", listaAluno[i].sexo);
@@ -107,15 +103,15 @@ void listarAniversariantesDoMes(Pessoa listaAluno[], Pessoa listaProfessor[], in
         formataData(listaAluno[i].dataNascimento.dia, listaAluno[i].dataNascimento.mes, listaAluno[i].dataNascimento.ano);
         printf("\nCpf: ");
         formataCpf(listaAluno[i].cpf);
-        printf("Quantidade de disciplinas: %d", listaAluno[i].qtdDisciplinas);
+        printf("\nQuantidade de disciplinas: %d", listaAluno[i].qtdDisciplinas);
         printf("\n------------\n");
       }
     }
   }
-  if (contador == 0)
+  if (!encontrou)
     printf("Nenhum aluno faz aniversário neste mês\n");
 
-  contador = 0;
+  encontrou = false;
 
   printf("Professores: \n");    
   if(qtdProf == 0)  
@@ -126,7 +122,7 @@ void listarAniversariantesDoMes(Pessoa listaAluno[], Pessoa listaProfessor[], in
     {
       if(listaProfessor[i].ativo && listaProfessor[i].dataNascimento.mes == mes)
       {
-        contador++;
+        encontrou = true;
         printf("\nNome: %s", listaProfessor[i].nome);
         printf("Matrícula: %d\n", listaProfessor[i].matricula);
         printf("Sexo: %c\n", listaProfessor[i].sexo);
@@ -134,13 +130,68 @@ void listarAniversariantesDoMes(Pessoa listaAluno[], Pessoa listaProfessor[], in
         formataData(listaProfessor[i].dataNascimento.dia, listaProfessor[i].dataNascimento.mes, listaProfessor[i].dataNascimento.ano);
         printf("\nCpf: ");
         formataCpf(listaProfessor[i].cpf);
-        printf("Quantidade de disciplinas: %d", listaProfessor[i].qtdDisciplinas);
+        printf("\nQuantidade de disciplinas: %d", listaProfessor[i].qtdDisciplinas);
         printf("\n------------\n");
       }
     }
   }
-  if (contador == 0)
+  if (!encontrou)
     printf("Nenhum professor faz aniversário neste mês\n");
+}
+
+void buscarPessoaPeloNome(Pessoa listaAluno[], Pessoa listaProf[], int qtdAluno, int qtdProf, char busca[])
+{
+  bool encontrou = false;  
+
+  printf("Alunos: \n");
+  if(qtdAluno == 0)              
+    printf("Lista de alunos está vazia.\n");
+  else
+  {
+    for (int i = 0; i < qtdAluno; i++)
+      if(strstr(listaAluno[i].nome, busca) != NULL)
+      {
+        encontrou = true;
+        printf("\nNome: %s", listaAluno[i].nome);
+        printf("Matrícula: %d\n", listaAluno[i].matricula);
+        printf("Sexo: %c\n", listaAluno[i].sexo);
+        printf("Data de nascimento: ");
+        formataData(listaAluno[i].dataNascimento.dia, listaAluno[i].dataNascimento.mes, listaAluno[i].dataNascimento.ano);
+        printf("\nCpf: ");
+        formataCpf(listaAluno[i].cpf);
+        printf("\nQuantidade de disciplinas: %d", listaAluno[i].qtdDisciplinas);
+        printf("\n------------\n");
+      }
+  }
+  
+  if(!encontrou)
+    printf("Nenhum aluno encontrado para essa busca\n");
+    
+  encontrou = false;
+  
+  printf("Professores: \n");    
+  if(qtdProf == 0)  
+    printf("Lista de professores está vazia.\n");
+  else
+  {
+    for (int i = 0; i < qtdProf; i++)
+      if(strstr(listaProf[i].nome, busca) != NULL)
+      {
+        encontrou = true;
+        printf("\nNome: %s", listaProf[i].nome);
+        printf("Matrícula: %d\n", listaProf[i].matricula);
+        printf("Sexo: %c\n", listaProf[i].sexo);
+        printf("Data de nascimento: ");
+        formataData(listaProf[i].dataNascimento.dia, listaProf[i].dataNascimento.mes, listaProf[i].dataNascimento.ano);
+        printf("\nCpf: ");
+        formataCpf(listaProf[i].cpf);
+        printf("\nQuantidade de disciplinas: %d", listaProf[i].qtdDisciplinas);
+        printf("\n------------\n");
+      }
+  }
+
+  if(!encontrou)
+    printf("Nenhum professor encontrado para essa busca\n");
 }
 
 void listarAlunosComMenosDeTresDisciplinas(Pessoa lista[], int qtd)

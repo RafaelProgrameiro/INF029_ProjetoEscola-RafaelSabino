@@ -717,6 +717,33 @@ int main() {
 
               break;
             }
+            case 8:
+            {
+              int tamBusca;
+              char busca[50];
+              printf("Buscar pessoa pelo nome\n");
+
+              printf("Buscar (pelo menos 3 caracters): ");
+              fgets(busca, 50, stdin);
+
+              tamBusca = strlen(busca);
+
+              if(busca[tamBusca - 1] == '\n')
+              {
+                busca[tamBusca - 1] = '\0';
+                tamBusca--;
+              }
+
+              if(tamBusca < 3 || tamBusca > 50)
+              {
+                printf("Tamanho de caracteres inválido\n");
+                break;
+              }
+
+              buscarPessoaPeloNome(listaAluno, listaProfessor, qtdAluno, qtdProf, busca);
+            
+              break;
+            }
             case 9:
             {
               printf("\nListar Alunos com menos de três disciplinas\n");
