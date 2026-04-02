@@ -717,6 +717,34 @@ int main() {
 
               break;
             }
+            case 9:
+            {
+              printf("\nListar Alunos com menos de três disciplinas\n");
+
+              if(qtdAluno == 0)
+              {
+                printf("Lista de alunos está vazia.\n");
+                break;
+              }
+              
+              listarAlunosComMenosDeTresDisciplinas(listaAluno, qtdAluno);
+              
+              break;
+            }
+            case 10:
+            {
+              printf("\nListar disciplinas com mais de quarenta vagas\n");
+
+              if(qtdDisc == 0)
+              {
+                printf("Lista de disciplinas está vazia.\n");
+                break;
+              }
+              
+              listarDisciplinasComMaisDeQuarentaVagas(listaDisciplina, qtdDisc);
+              
+              break;
+            }
             default: printf("Opção Inválida\n"); break;
           }
         }

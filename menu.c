@@ -84,9 +84,9 @@ int menuRelatorios()
   printf("5 - Listar Alunos/Professores em ordem alfabética\n");
   printf("6 - Listar Alunos/Professores por data de nascimento\n");
   printf("7 - Aniversariantes do mês\n");
-  printf("12 - Listar pessoas por busca do nome\n");
-  printf("13 - Listar Alunos matriculados em menos de 3 disciplinas\n");
-  printf("14 - Listar Disciplinas com mais de 40 vagas\n");
+  printf("8 - Listar pessoas por busca do nome\n");
+  printf("9 - Listar Alunos matriculados em menos de 3 disciplinas\n");
+  printf("10 - Listar Disciplinas com mais de 40 vagas\n");
   printf("0 - Voltar\n");
 
   scanf("%d", &opcaoRelatorio);

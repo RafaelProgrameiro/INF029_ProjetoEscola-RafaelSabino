@@ -9,5 +9,7 @@ void listarPessoasPorSexo(Pessoa lista[], int qtd, char sexo);
 void listarPessoasPorOrdemAlfabetica(Pessoa lista[], int qtd);
 void listarPessoasPorDataNascimento(Pessoa lista[], int qtd);
 void listarAniversariantesDoMes(Pessoa listaAluno[], Pessoa listaProfessor[], int qtdAluno, int qtdProf, int mes);
+void listarAlunosComMenosDeTresDisciplinas(Pessoa lista[], int qtd);
+void listarDisciplinasComMaisDeQuarentaVagas(Disciplina lista[], int qtd);
 
 #endif
