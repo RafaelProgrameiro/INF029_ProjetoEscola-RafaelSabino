@@ -32,14 +32,18 @@ bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula)
 
   while(!nomeValido)
   {
-    int tamNome = 0;
     printf("Digite o nome do %s (pelo menos 3 letras): ", pessoa);
     fgets(nome, 50, stdin);
 
-    for(int i = 0; nome[i] != '\n'; i++)
-      tamNome++;
+    int tamNome = strlen(nome);
 
-    if(tamNome < 3)
+    if(tamNome > 0 && nome[tamNome - 1] == '\n')
+    {
+      nome[tamNome - 1] = '\0';
+      tamNome--;
+    }
+
+    if(tamNome < 3 || tamNome > 50)
       printf("Tamanho do nome inválido\n");
     else    
       nomeValido = true;  
@@ -101,7 +105,7 @@ void listarPessoas(Pessoa lista[], int qtd)
   { 
     if(lista[i].ativo)   
     {                  
-      printf("\nNome: %s", lista[i].nome);
+      printf("\nNome: %s\n", lista[i].nome);
       printf("Matrícula: %d\n", lista[i].matricula);
       printf("Sexo: %c\n", lista[i].sexo);
       printf("Data de nascimento: ");
@@ -143,21 +147,26 @@ bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool encontrado, int ma
           char nome[50];
           bool nomeValido = false;
 
-          printf("Digite o nome do %s: ", pessoa);
-          fgets(nome, 50, stdin);
+          
 
           while(!nomeValido)
-          {
-            int tamNome = 0;
-            for(int i = 0; i < nome[i] != '\n'; i++)
-              tamNome++;
-  
-            if(tamNome < 3)
+          {           
+            printf("Digite o nome do %s: ", pessoa);
+            fgets(nome, 50, stdin);
+
+            int tamNome = strlen(nome);
+
+            if(tamNome > 0 && nome[tamNome - 1] == '\n')
+            {
+              nome[tamNome - 1] = '\0';
+              tamNome--;
+            }
+
+            if(tamNome < 3 || tamNome > 50)
               printf("Tamanho do nome inválido\n");
             else    
               nomeValido = true;
           }
-
 
           strcpy(lista[i].nome, nome);
           sairAtualizar = true;

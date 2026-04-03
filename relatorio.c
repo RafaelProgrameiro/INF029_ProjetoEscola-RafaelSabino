@@ -11,7 +11,7 @@ bool detalharDisciplina(Disciplina lista[], Pessoa listaAluno[], int qtdAluno, i
     {
       encontrado = true;
       int matriculaAluno;
-      printf("\nNome: %s", lista[i].nome);
+      printf("\nNome: %s\n", lista[i].nome);
       printf("Código: %d\n", lista[i].cod);
       printf("Semestre: %dº\n", lista[i].semestre);
       printf("Total de vagas: %d\n", lista[i].totalVagas);
@@ -47,7 +47,7 @@ void listarPessoasPorSexo(Pessoa lista[], int qtd, char sexo)
   {
     if(lista[i].ativo && lista[i].sexo == sexo)
     {
-      printf("\nNome: %s", lista[i].nome);
+      printf("\nNome: %s\n", lista[i].nome);
       printf("Matrícula: %d\n", lista[i].matricula);
       printf("Sexo: %c\n", lista[i].sexo);
       printf("Data de nascimento: ");
@@ -96,7 +96,7 @@ void listarAniversariantesDoMes(Pessoa listaAluno[], Pessoa listaProfessor[], in
       if(listaAluno[i].ativo && listaAluno[i].dataNascimento.mes == mes)
       {
         encontrou = true;
-        printf("\nNome: %s", listaAluno[i].nome);
+        printf("\nNome: %s\n", listaAluno[i].nome);
         printf("Matrícula: %d\n", listaAluno[i].matricula);
         printf("Sexo: %c\n", listaAluno[i].sexo);
         printf("Data de nascimento: ");
@@ -123,7 +123,7 @@ void listarAniversariantesDoMes(Pessoa listaAluno[], Pessoa listaProfessor[], in
       if(listaProfessor[i].ativo && listaProfessor[i].dataNascimento.mes == mes)
       {
         encontrou = true;
-        printf("\nNome: %s", listaProfessor[i].nome);
+        printf("\nNome: %s\n", listaProfessor[i].nome);
         printf("Matrícula: %d\n", listaProfessor[i].matricula);
         printf("Sexo: %c\n", listaProfessor[i].sexo);
         printf("Data de nascimento: ");
@@ -152,7 +152,7 @@ void buscarPessoaPeloNome(Pessoa listaAluno[], Pessoa listaProf[], int qtdAluno,
       if(strstr(listaAluno[i].nome, busca) != NULL)
       {
         encontrou = true;
-        printf("\nNome: %s", listaAluno[i].nome);
+        printf("\nNome: %s\n", listaAluno[i].nome);
         printf("Matrícula: %d\n", listaAluno[i].matricula);
         printf("Sexo: %c\n", listaAluno[i].sexo);
         printf("Data de nascimento: ");
@@ -178,7 +178,7 @@ void buscarPessoaPeloNome(Pessoa listaAluno[], Pessoa listaProf[], int qtdAluno,
       if(strstr(listaProf[i].nome, busca) != NULL)
       {
         encontrou = true;
-        printf("\nNome: %s", listaProf[i].nome);
+        printf("\nNome: %s\n", listaProf[i].nome);
         printf("Matrícula: %d\n", listaProf[i].matricula);
         printf("Sexo: %c\n", listaProf[i].sexo);
         printf("Data de nascimento: ");
@@ -200,7 +200,7 @@ void listarAlunosComMenosDeTresDisciplinas(Pessoa lista[], int qtd)
   {
     if(lista[i].ativo && lista[i].qtdDisciplinas < 3)
     {
-      printf("\nNome: %s", lista[i].nome);
+      printf("\nNome: %s\n", lista[i].nome);
       printf("Matrícula: %d\n", lista[i].matricula);
       printf("Sexo: %c\n", lista[i].sexo);
       printf("Data de nascimento: ");
@@ -219,7 +219,7 @@ void listarDisciplinasComMaisDeQuarentaVagas(Disciplina lista[], int qtd)
   {
     if(lista[i].ativo && lista[i].totalVagas >= 40)
     {
-      printf("\nNome: %s", lista[i].nome);
+      printf("\nNome: %s\n", lista[i].nome);
       printf("Código: %d\n", lista[i].cod);
       printf("Semestre: %dº\n", lista[i].semestre);
       printf("Total de vagas: %d\n", lista[i].totalVagas);

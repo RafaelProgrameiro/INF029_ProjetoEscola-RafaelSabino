@@ -5,6 +5,7 @@
 bool cadastrarDisciplina(Disciplina lista[], Pessoa listaProfessor[], int qtdProf, int qtd, int cod)
 { 
   char nome[25];
+  bool nomeValido = false;
   int semestre;
   bool semestreValido = false;
   int totalVagas;
@@ -18,11 +19,25 @@ bool cadastrarDisciplina(Disciplina lista[], Pessoa listaProfessor[], int qtdPro
     printf("Lista de disciplinas já está cheia.\n");
     return false;
   }
+ 
+  while(!nomeValido)
+  {
+    printf("Digite o nome do disciplina: ");
+    fgets(nome, 25, stdin);
 
-  printf("Digite o nome do disciplina: ");
-  fgets(nome, 25, stdin);
+    int tamNome = strlen(nome);
 
-  strcpy(lista[qtd].nome, nome);
+    if(tamNome > 0 && nome[tamNome - 1] == '\n')
+    {
+      nome[tamNome - 1] = '\0';
+      tamNome--;
+    }
+
+    if(tamNome < 3 || tamNome > 25)
+      printf("Tamanho do nome inválido\n");
+    else    
+      nomeValido = true;  
+  }
 
   while(!semestreValido)
   {
@@ -74,7 +89,8 @@ bool cadastrarDisciplina(Disciplina lista[], Pessoa listaProfessor[], int qtdPro
   }
   
   lista[qtd].cod = cod;
-  lista[qtd].ativo = true;  
+  lista[qtd].ativo = true;
+  strcpy(lista[qtd].nome, nome);  
   lista[qtd].semestre = semestre;
   lista[qtd].totalVagas = totalVagas;
   lista[qtd].professor = professor;
@@ -97,7 +113,7 @@ void listarDisciplinas(Disciplina lista[], int qtd)
   { 
     if(lista[i].ativo)   
     {                  
-      printf("\nNome: %s", lista[i].nome);
+      printf("\nNome: %s\n", lista[i].nome);
       printf("Código: %d\n", lista[i].cod);
       printf("Semestre: %dº\n", lista[i].semestre);
       printf("Total de vagas: %d\n", lista[i].totalVagas);
