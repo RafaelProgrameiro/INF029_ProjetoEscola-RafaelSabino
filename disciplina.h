@@ -5,6 +5,7 @@
 #include "escola.h"
 
 bool cadastrarDisciplina(Disciplina lista[], Pessoa listaProfessor[], int qtdProf, int qtd, int cod);
+void imprimirDisciplina(Disciplina disc);
 void listarDisciplinas(Disciplina lista[], int qtd);
 bool removerDisciplina(Disciplina lista[], Pessoa listaProfessor[], int qtd, int qtdProf, bool encontrado, int codDisciplina);
 bool inserirAlunoNaDisciplina(Disciplina lista[], Pessoa listaAluno[], int qtdAluno, int qtd, bool encontrado, int codDisciplina);

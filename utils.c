@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 
-bool validaCpf(char cpf[])
+bool validarCpf(char cpf[])
 {
   int cpfNumerico[11];
   int soma, resto, div1, div2;
@@ -44,7 +44,7 @@ bool validaCpf(char cpf[])
   return true;
 }
 
-bool validaData(int dia, int mes, int ano)
+bool validarData(int dia, int mes, int ano)
 { 
   bool bissexto;
 
@@ -100,7 +100,7 @@ bool validaData(int dia, int mes, int ano)
   return true;
 }
 
-void formataCpf(char cpf[])
+void formatarCpf(char cpf[])
 {
   for(int i = 0; i < 3; i++)
     printf("%c", cpf[i]);
@@ -118,7 +118,7 @@ void formataCpf(char cpf[])
     printf("%c", cpf[i]);  
 }
 
-void formataData(int dia, int mes, int ano)
+void formatarData(int dia, int mes, int ano)
 {
   if(dia < 10)
     printf("0");

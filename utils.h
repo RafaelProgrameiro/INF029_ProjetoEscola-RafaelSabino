@@ -3,10 +3,10 @@
 #include <stdbool.h>
 #include "pessoa.h"
 
-bool validaCpf(char cpf[]);
-bool validaData(int dia, int mes, int ano);
-void formataCpf(char cpf[]);
-void formataData(int dia, int mes, int ano);
+bool validarCpf(char cpf[]);
+bool validarData(int dia, int mes, int ano);
+void formatarCpf(char cpf[]);
+void formatarData(int dia, int mes, int ano);
 void ordenarPessoasPorNome(Pessoa lista[], int qtd);
 void ordenarPessoasPorDataNacimento(Pessoa lista[], int qtd);
 

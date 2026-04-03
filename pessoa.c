@@ -10,8 +10,9 @@ bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula)
   int  tam_lista;
   char nome[50];
   bool nomeValido = false;
-  char sexo;
+  int sexoNum;
   bool sexoValido = false;
+  char sexo;
   int dia, mes, ano;
   bool dataValida = false;
   char cpf[12];
@@ -52,14 +53,23 @@ bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula)
   while(!sexoValido)
   {
     printf("Digite o caracter válido para o sexo (maiúsculo): \n");
-    printf("M - Masculino\n");
-    printf("F - Feminino\n");
+    printf("1 - Masculino\n");
+    printf("2 - Feminino\n");
 
-    scanf(" %c", &sexo);
-    switch (sexo)    
+    if(scanf("%d", &sexoNum) != 1)
     {
-      case 'M': sexoValido = true; break;
-      case 'F': sexoValido = true; break;
+      printf("Entrada inválida.\n");
+
+      int c;
+      while ((c = getchar()) != '\n' && c != EOF);
+
+      continue;
+    }
+
+    switch (sexoNum)    
+    {
+      case 1: sexo = 'M'; sexoValido = true; break;
+      case 2: sexo = 'F'; sexoValido = true; break;
       default: printf("Entrada inválida.\n"); break;
     }
   }
@@ -69,7 +79,7 @@ bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula)
     printf("Digite o dia, mês e ano do nascimento (Ex: 16 10 1990): ");
     scanf("%d %d %d", &dia, &mes, &ano);
 
-    dataValida = validaData(dia, mes, ano);
+    dataValida = validarData(dia, mes, ano);
     if(!dataValida)
       printf("Entrada inválida\n");
   }
@@ -81,7 +91,7 @@ bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula)
     printf("Digite o cpf (somente números): ");
     fgets(cpf, 12, stdin);
 
-    cpfValido = validaCpf(cpf);
+    cpfValido = validarCpf(cpf);
     if(!cpfValido)
       printf("Entrada inválida\n");      
   }
@@ -99,22 +109,25 @@ bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula)
   return true;
 }
 
+void imprimirPessoa(Pessoa p)
+{
+  printf("\nNome: %s\n", p.nome);
+  printf("Matrícula: %d\n", p.matricula);
+  printf("Sexo: %c\n", p.sexo);
+  printf("Data de nascimento: ");
+  formatarData(p.dataNascimento.dia, p.dataNascimento.mes, p.dataNascimento.ano);
+  printf("\nCpf: ");
+  formatarCpf(p.cpf);
+  printf("\nQuantidade de disciplinas: %d", p.qtdDisciplinas);      
+  printf("\n------------\n");
+}
+
 void listarPessoas(Pessoa lista[], int qtd)
 {  
   for(int i = 0; i < qtd; i++)
   { 
     if(lista[i].ativo)   
-    {                  
-      printf("\nNome: %s\n", lista[i].nome);
-      printf("Matrícula: %d\n", lista[i].matricula);
-      printf("Sexo: %c\n", lista[i].sexo);
-      printf("Data de nascimento: ");
-      formataData(lista[i].dataNascimento.dia, lista[i].dataNascimento.mes, lista[i].dataNascimento.ano);
-      printf("\nCpf: ");
-      formataCpf(lista[i].cpf);
-      printf("\nQuantidade de disciplinas: %d", lista[i].qtdDisciplinas);      
-      printf("\n------------\n");
-    }
+      imprimirPessoa(lista[i]);    
   }
 }
 
@@ -174,20 +187,29 @@ bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool encontrado, int ma
         }
         case 2: 
         {
-          char sexo;
+          int sexoNum;
           bool sexoValido = false;
 
           while(!sexoValido)
           {
             printf("Digite o caracter válido para o sexo (maiúsculo): \n");
-            printf("M - Masculino\n");
-            printf("F - Feminino\n");
+            printf("1 - Masculino\n");
+            printf("2 - Feminino\n");
 
-            scanf(" %c", &sexo);
-            switch (sexo)    
+            if(scanf("%d", &sexoNum) != 1)
             {
-              case 'M': lista[i].sexo = sexo; sexoValido = true; break;
-              case 'F': lista[i].sexo = sexo; sexoValido = true; break;
+              printf("Entrada inválida.\n");
+
+              int c;
+              while ((c = getchar()) != '\n' && c != EOF);
+
+              continue;
+            }
+
+            switch (sexoNum)    
+            {
+              case 1: lista[i].sexo = 'M'; sexoValido = true; break;
+              case 2: lista[i].sexo = 'F'; sexoValido = true; break;
               default: printf("Entrada inválida.\n"); break;
             }
           }
@@ -204,7 +226,7 @@ bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool encontrado, int ma
             printf("Digite o dia, mês e ano do nascimento (Ex: 16 10 1990): ");
             scanf("%d %d %d", &dia, &mes, &ano);
 
-            dataValida = validaData(dia, mes, ano);
+            dataValida = validarData(dia, mes, ano);
             if(!dataValida)
               printf("Entrada inválida\n");
           }
@@ -225,7 +247,7 @@ bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool encontrado, int ma
             printf("Digite o cpf (somente números): ");
             fgets(cpf, 12, stdin);
 
-            cpfValido = validaCpf(cpf);
+            cpfValido = validarCpf(cpf);
             if(!cpfValido)
               printf("Cpf informado inválido\n");
           }

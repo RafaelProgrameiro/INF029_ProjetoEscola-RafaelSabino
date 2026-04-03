@@ -107,20 +107,25 @@ bool cadastrarDisciplina(Disciplina lista[], Pessoa listaProfessor[], int qtdPro
   return true;
 }
 
+void imprimirDisciplina(Disciplina disc)
+{
+  printf("\nNome: %s\n", disc.nome);
+  printf("Código: %d\n", disc.cod);
+  printf("Semestre: %dº\n", disc.semestre);
+  printf("Total de vagas: %d\n", disc.totalVagas);
+  printf("Total de alunos matriculados: %d\n", disc.qtdAlunosMatriculados);
+  printf("Vagas Restantes: %d\n", disc.totalVagas - disc.qtdAlunosMatriculados);
+  printf("Professor: %s\n", disc.professor.nome);
+}
+
 void listarDisciplinas(Disciplina lista[], int qtd)
 {  
   for(int i = 0; i < qtd; i++)
   { 
     if(lista[i].ativo)   
     {                  
-      printf("\nNome: %s\n", lista[i].nome);
-      printf("Código: %d\n", lista[i].cod);
-      printf("Semestre: %dº\n", lista[i].semestre);
-      printf("Total de vagas: %d\n", lista[i].totalVagas);
-      printf("Total de alunos matriculados: %d\n", lista[i].qtdAlunosMatriculados);
-      printf("Vagas Restantes: %d\n", lista[i].totalVagas - lista[i].qtdAlunosMatriculados);
-      printf("Professor: %s", lista[i].professor.nome);
-      printf("\n------------\n");
+      imprimirDisciplina(lista[i]);
+      printf("-------------------\n");
     }
   }
 }
