@@ -78,7 +78,7 @@ int main() {
             {              
               printf("Atualizar Aluno\n");              
               int matriculaAluno;
-              bool encontrado = false;
+              bool atualizado = false;
 
               if(qtdAluno == 0)
               {
@@ -95,12 +95,12 @@ int main() {
                 break;
               }
 
-              encontrado = atualizarPessoa(opcao, listaAluno, qtdAluno, encontrado, matriculaAluno);
+              atualizado = atualizarPessoa(opcao, listaAluno, qtdAluno, atualizado, matriculaAluno);
 
-              if (encontrado)
+              if (atualizado)
                 printf("Aluno atualizado com sucesso\n");
               else
-                printf("Matrícula inexistente.\n");
+                printf("Não foi possível realizar a atualização\n");
 
               break;
             } 
@@ -190,7 +190,7 @@ int main() {
             {              
               printf("Atualizar Professor\n");              
               int matriculaProf;
-              bool encontrado = false;
+              bool atualizado = false;
 
               if(qtdProf == 0)
               {
@@ -207,12 +207,12 @@ int main() {
                 break;
               }
 
-              encontrado = atualizarPessoa(opcao, listaProfessor, qtdProf, encontrado, matriculaProf);
+              atualizado = atualizarPessoa(opcao, listaProfessor, qtdProf, atualizado, matriculaProf);
 
-              if (encontrado)
+              if (atualizado)
                 printf("Professor atualizado com sucesso\n");
               else
-                printf("Matrícula inexistente.\n");
+                printf("Não foi possível realizar a atualização\n");
 
               break;
             } 

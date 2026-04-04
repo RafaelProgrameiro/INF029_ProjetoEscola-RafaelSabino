@@ -6,7 +6,7 @@
 bool cadastrarPessoa(int opcao, Pessoa lista[], int qtd, int matricula);
 void imprimirPessoa(Pessoa p);
 void listarPessoas(Pessoa lista[], int qtdAluno);
-bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool encontrado, int matriculaPessoa);
+bool atualizarPessoa(int opcao, Pessoa lista[], int qtd, bool atualizado, int matriculaPessoa);
 bool removerPessoa(Pessoa lista[], int qtd, bool encontrado, int matriculaPessoa);
 
 #endif
