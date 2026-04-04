@@ -417,11 +417,7 @@ int main() {
 
               while(!opcaoValida)
               {
-                printf("\nListar Alunos/Professores\n");
-                printf("1 - Listar Alunos\n");
-                printf("2 - Listar Professores\n");
-                printf("0 - Voltar\n");
-                scanf("%d", &opcaoPessoa);
+                opcaoPessoa = menuAlunoOuProfessor();
 
                 switch(opcaoPessoa)
                 {
@@ -511,10 +507,7 @@ int main() {
 
               while(!opcaoValida)
               {                
-                printf("1 - Listar Alunos\n");
-                printf("2 - Listar Professores\n");
-                printf("0 - Voltar\n");
-                scanf("%d", &opcaoPessoa);
+                opcaoPessoa = menuAlunoOuProfessor();
 
                 switch(opcaoPessoa)
                 {
@@ -536,11 +529,7 @@ int main() {
 
                     while(!opcaoSexoValida)
                     {
-                      printf("\nSexo\n");
-                      printf("1 - Masculino\n");
-                      printf("2 - Feminino\n");
-                      printf("0 - Voltar\n");
-                      scanf("%d", &opcaoSexo);
+                      opcaoSexo = menuSexo();
 
                       switch(opcaoSexo)
                       {
@@ -572,11 +561,7 @@ int main() {
 
                     while(!opcaoSexoValida)
                     {
-                      printf("\nSexo\n");
-                      printf("1 - Masculino\n");
-                      printf("2 - Feminino\n");
-                      printf("0 - Voltar\n");
-                      scanf("%d", &opcaoSexo);
+                      opcaoSexo = menuSexo();
 
                       switch(opcaoSexo)
                       {
@@ -606,11 +591,7 @@ int main() {
 
               while(!opcaoValida)
               {
-                printf("\nListar Alunos/Professores\n");
-                printf("1 - Listar Alunos\n");
-                printf("2 - Listar Professores\n");
-                printf("0 - Voltar\n");
-                scanf("%d", &opcaoPessoa);
+                opcaoPessoa = menuAlunoOuProfessor();
 
                 switch(opcaoPessoa)
                 {
@@ -657,11 +638,7 @@ int main() {
 
               while(!opcaoValida)
               {
-                printf("\nListar Alunos/Professores\n");
-                printf("1 - Listar Alunos\n");
-                printf("2 - Listar Professores\n");
-                printf("0 - Voltar\n");
-                scanf("%d", &opcaoPessoa);
+                opcaoPessoa = menuAlunoOuProfessor();
 
                 switch(opcaoPessoa)
                 {

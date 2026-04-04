@@ -94,3 +94,31 @@ int menuRelatorios()
 
   return opcaoRelatorio;
 }
+
+int menuAlunoOuProfessor()
+{
+  int opcaoPessoa;
+  printf("\nListar Alunos/Professores\n");
+  printf("1 - Listar Alunos\n");
+  printf("2 - Listar Professores\n");
+  printf("0 - Voltar\n");
+
+  scanf("%d", &opcaoPessoa);
+  getchar();
+
+  return opcaoPessoa;
+}
+
+int menuSexo()
+{
+  int opcaoSexo;
+  printf("\nSexo\n");
+  printf("1 - Masculino\n");
+  printf("2 - Feminino\n");
+  printf("0 - Voltar\n");
+
+  scanf("%d", &opcaoSexo);
+  getchar();
+
+  return opcaoSexo;
+}
