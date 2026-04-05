@@ -6,6 +6,7 @@ bool cadastrarDisciplina(Disciplina lista[], Pessoa listaProfessor[], int qtdPro
 { 
   char nome[25];
   bool nomeValido = false;
+  int tamNome;
   int semestre;
   bool semestreValido = false;
   int totalVagas;
@@ -22,16 +23,15 @@ bool cadastrarDisciplina(Disciplina lista[], Pessoa listaProfessor[], int qtdPro
  
   while(!nomeValido)
   {
-    printf("Digite o nome do disciplina: ");
+    printf("Digite o nome do disciplina (pelo menos 3 letras) ou '0' para cancelar cadastro: ");
     fgets(nome, 25, stdin);
 
-    int tamNome = strlen(nome);
+    nome[strcspn(nome, "\n")] = '\0';
 
-    if(tamNome > 0 && nome[tamNome - 1] == '\n')
-    {
-      nome[tamNome - 1] = '\0';
-      tamNome--;
-    }
+    if(strcmp(nome, "0") == 0)
+      return false;
+
+    tamNome = strlen(nome); 
 
     if(tamNome < 3 || tamNome > 25)
       printf("Tamanho do nome inválido\n");
@@ -41,35 +41,39 @@ bool cadastrarDisciplina(Disciplina lista[], Pessoa listaProfessor[], int qtdPro
 
   while(!semestreValido)
   {
-    printf("Digite o semestre da disciplina (mínimo: 1, máximo: 8): ");
+    printf("Digite o semestre da disciplina (mínimo: 1, máximo: 8) ou '0' para cancelar cadastro: ");
     scanf("%d", &semestre);
 
-    if(semestre <= 0 || semestre > 8)
-    {
-      printf("Número inválido para o semestre\n");
+    if(semestre == 0)
       return false;
-    }
-    semestreValido = true;
+
+    if(semestre < 0 || semestre > 8)    
+      printf("Número inválido para o semestre\n");
+    else
+      semestreValido = true;
   }
 
   while(!totalVagasValido)
   {
-    printf("Digite a quantidade de vagas para a disciplina (mínimo: 5, máximo: 60): ");
+    printf("Digite a quantidade de vagas para a disciplina (mínimo: 5, máximo: 60) ou '0' para cancelar cadastro: ");
     scanf("%d", &totalVagas);
-  
-    if(totalVagas < 5 || totalVagas > 60)
-    {
-      printf("Número inválido para a quantidade de vagas\n");
-      return false;
-    }
 
-    totalVagasValido = true;
+    if(totalVagas == 0)
+      return false;
+  
+    if(totalVagas < 5 || totalVagas > 60)    
+      printf("Número inválido para a quantidade de vagas\n");
+    else      
+      totalVagasValido = true;
   }
 
   while(!profEncontrado)
   {
-    printf("Digite a matricula do professor da disciplina: ");
+    printf("Digite a matricula do professor da disciplina ou '0' para cancelar cadastro: ");
     scanf("%d", &matriculaProf);
+
+    if(matriculaProf == 0)
+      return false;
 
     for(int i = 0; i < qtdProf; i++)
     {
@@ -81,11 +85,8 @@ bool cadastrarDisciplina(Disciplina lista[], Pessoa listaProfessor[], int qtdPro
       }
     }
 
-    if(!profEncontrado)
-    {
+    if(!profEncontrado)    
       printf("Não foi possível encontrar um professor com esta matrícula\n");
-      return false;
-    }
   }
   
   lista[qtd].cod = cod;
