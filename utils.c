@@ -91,9 +91,9 @@ bool validarData(int dia, int mes, int ano)
     return false;
   }  
 
-  if(ano < 1900 && ano > 2026)
+  if(ano < 1900 || ano > 2026)
   {
-    printf("O ano precisa ser maior que 1900 e/ou menor que 2026\n");
+    printf("O ano precisa ser maior que 1900 ou menor que 2026\n");
     return false;
   }
 
